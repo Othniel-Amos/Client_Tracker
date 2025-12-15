@@ -1,6 +1,5 @@
 import datetime as dt
 import functions
-temp_field_service = {}
 
 field_service = {"Date":["05/05/2009","05/06/2007"],"Hours":["30","40"],
                  "Student":["Michael","Marcus"],"Notes":["Listened well","Barely Listened"]}
@@ -13,12 +12,9 @@ if choice == "1":
     functions.display(field_service)
     date_edit = input("Please enter the date you would like to edit:")
     #Searches for the date in the larger dictionary
-    for index, date in enumerate(field_service["Date"]):
-        if date == date_edit:
-            for key in field_service.keys():
-                temp_field_service.update({key:[field_service[key][index]]})
-            break
-    print(functions.display(temp_field_service))
+    temp_field_service,index = functions.search(field_service,date_edit)
+
+    functions.display(temp_field_service)
     done = True
 
     while done:
@@ -36,9 +32,8 @@ if choice == "1":
 
 
     #Updates the field service dict
-    for key in field_service.keys():
-        add_to = str(temp_field_service[key])[2:-2]
-        field_service[key][index] = add_to
+    functions.update_dict(field_service,temp_field_service,index)
+
 
     print(field_service)
 
@@ -47,6 +42,23 @@ if choice == "1":
 
 elif choice == "2":
     functions.display(field_service)
+
+elif choice == "3":
+    date_edit = input("Please enter the date you would like to delete:")
+    temp_field_service,index = functions.search(field_service,date_edit)
+    functions.display(temp_field_service)
+    choice = input("Please confirm the deletion protocol (Y/N):")
+
+    if choice == "Y":
+        for key in field_service.keys():
+            del field_service[key][index]
+
+
+    print("Deletion was successful")
+
+
+
+
 
 
 
