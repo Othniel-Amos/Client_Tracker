@@ -15,7 +15,7 @@ def search(database,date_edit):
             break
     return temp_field_service,index
 
-def update_dict(database,temp_database,index):
+def update_dict_temp(database,temp_database,index):
     for key in database.keys():
         add_to = str(temp_database[key])[2:-2]
         database[key][index] = add_to

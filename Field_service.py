@@ -1,12 +1,13 @@
-import datetime as dt
+import time
 import functions
+from functions import update_dict_temp
 
 field_service = {"Date":["05/05/2009","05/06/2007"],"Hours":["30","40"],
                  "Student":["Michael","Marcus"],"Notes":["Listened well","Barely Listened"]}
 
 print("This is the field service app:")
 print("Use this to keep track of your clients")
-choice = input("Edit (1), View (2), Delete(3): ")
+choice = input("Edit (1), View (2), Delete(3), Add(4): ")
 
 if choice == "1":
     functions.display(field_service)
@@ -32,7 +33,7 @@ if choice == "1":
 
 
     #Updates the field service dict
-    functions.update_dict(field_service,temp_field_service,index)
+    functions.update_dict_temp(field_service,temp_field_service,index)
 
 
     print(field_service)
@@ -55,6 +56,31 @@ elif choice == "3":
 
 
     print("Deletion was successful")
+
+elif choice == "4":
+    temp_field = []
+    current_date = input("Please input date or type 'Y' to input current date:")
+    if current_date == "Y":
+        current_date = time.strftime("%d/%m/%Y")
+
+    temp_field.append(current_date)
+
+    questions = ["Number of Hours:","Student Name:","Notes:"]
+
+    for question in questions:
+        add_it = input(f"{question}")
+        temp_field.append(add_it)
+
+    #Adds the values to the field_service dictionary
+    for index, key in enumerate(field_service.keys()):
+        field_service[key].append(temp_field[index])
+
+    print(field_service)
+
+
+
+
+
 
 
 
