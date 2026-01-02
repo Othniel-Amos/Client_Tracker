@@ -10,15 +10,19 @@ print("Use this to keep track of your clients")
 choice = ""
 
 while choice != "5":
-    choice = input("Edit (1), View (2), Delete(3), Add(4), Quit(5): ")
+    choice = input("Edit (1), View (2), Delete(3), Add(4), Quit(5): ").strip()
+
     if choice == "1":
         functions.display(field_service)
         date_edit = input("Please enter the date you would like to edit:")
         #Searches for the date in the larger dictionary
-        temp_field_service,index = functions.search(field_service,date_edit)
-
-        functions.display(temp_field_service)
-        done = True
+        try:
+            temp_field_service,index = functions.search(field_service,date_edit)
+        except:
+            done = False
+        else:
+            functions.display(temp_field_service)
+            done = True
 
         while done:
             print("Date (1), Hours (2), Student (3), Notes (4)")
@@ -32,10 +36,11 @@ while choice != "5":
             done = input("Would you like to edit this date again (Y/N):")
             if done == "N":
                 done = False
+            functions.update_dict_temp(field_service, temp_field_service, index)
 
 
         #Updates the field service dict
-        functions.update_dict_temp(field_service,temp_field_service,index)
+
 
 
 
@@ -73,6 +78,9 @@ while choice != "5":
         #Adds the values to the field_service dictionary
         for index, key in enumerate(field_service.keys()):
             field_service[key].append(temp_field[index])
+
+    elif choice != 5:
+        print("Please enter a valid number")
 
 
     functions.dict_to_csv(field_service,DATA_FILE)

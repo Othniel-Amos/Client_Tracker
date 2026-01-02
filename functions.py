@@ -13,13 +13,21 @@ def display(database):
 
 def search(database,date_edit):
     '''Searches a dictionary based on the date given'''
-    temp_field_service ={}
-    for index, date in enumerate(database["Date"]):
-        if date == date_edit:
-            for key in database.keys():
-                temp_field_service.update({key:[database[key][index]]})
-            break
-    return temp_field_service,index
+    try:
+        temp_field_service ={}
+        corrupt = True
+        for index, date in enumerate(database["Date"]):
+            if date == date_edit:
+                for key in database.keys():
+                    temp_field_service.update({key:[database[key][index]]})
+                    corrupt = False
+                break
+        if corrupt:
+            raise KeyError
+    except KeyError:
+        print("ERROR INVALID DATE:The date may not have been typed correctly")
+    else:
+        return temp_field_service, index
 
 def update_dict_temp(database,temp_database,index):
     '''Updates a dictionary based on the values of another dictionary'''
