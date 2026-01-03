@@ -1,6 +1,6 @@
 import pandas as pd
 from pandas import DataFrame
-
+import os
 
 def display(database):
     '''Displays the values of a dictionary in a field service format'''
@@ -46,7 +46,15 @@ def dict_to_csv(database,datafile):
     df = pd.DataFrame(database)
     df.to_csv(datafile, index=False)
 
-
+def initalize(datafile):
+    if __name__ != "__main__":
+        if os.path.exists(datafile):
+            pass
+            return True
+        else:
+            with open(datafile, "w") as file:
+                file.write("Date,Hours,Student,Notes")
+            return False
 
 
 

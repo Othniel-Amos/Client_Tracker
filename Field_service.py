@@ -3,14 +3,34 @@ import functions
 import pandas as pd
 
 DATA_FILE = "data_values.csv"
-field_service = functions.csv_to_dict(DATA_FILE)
+field_service = {"Date":[],"Hours":[],"Student":[],"Notes":[]}
 
+#Checks if the csv file exists and creates it if it doesn't
+exists = functions.initalize(DATA_FILE)
+
+print(exists)
 print("This is the field service app:")
 print("Use this to keep track of your clients")
 choice = ""
 
+
+
 while choice != "5":
     choice = input("Edit (1), View (2), Delete(3), Add(4), Quit(5): ").strip()
+    print(field_service)
+
+    #Prevents any errors from viewing an empty file
+    if not exists:
+        print("There appears to be no records \nPlease add some to continue")
+        choice = "4"
+        field_service = functions.csv_to_dict(DATA_FILE)
+    elif field_service["Date"] == None:
+        print("\nThere appears to be no records \nPlease add some to continue\n")
+        choice = "4"
+        field_service["Date"] = []
+    elif exists:
+        field_service = functions.csv_to_dict(DATA_FILE)
+
 
     if choice == "1":
         functions.display(field_service)
@@ -57,6 +77,8 @@ while choice != "5":
         if choice == "Y":
             for key in field_service.keys():
                 del field_service[key][index]
+            if len(field_service["Date"]) == 0:
+                field_service["Date"] = None
 
 
         print("Deletion was successful")
@@ -78,8 +100,9 @@ while choice != "5":
         #Adds the values to the field_service dictionary
         for index, key in enumerate(field_service.keys()):
             field_service[key].append(temp_field[index])
+        exists = True
 
-    elif choice != 5:
+    elif choice != "5":
         print("Please enter a valid number")
 
 
