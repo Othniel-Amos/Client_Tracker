@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9007434f-3d77-408c-ac42-fa323f0a2e36" name="Changes" comment="Add option enabled">
+    <list default="true" id="9007434f-3d77-408c-ac42-fa323f0a2e36" name="Changes" comment="Fix all git issues">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Field_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/Field_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_values.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data_values.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,7 +182,23 @@
       <option name="project" value="LOCAL" />
       <updated>1765832874713</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Merge branches">
+      <option name="closed" value="true" />
+      <created>1767557441416</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1767557441416</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Fix all git issues">
+      <option name="closed" value="true" />
+      <created>1767557502020</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1767557502020</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -202,10 +221,12 @@
     <MESSAGE value="Fine tune edit option" />
     <MESSAGE value="Add deletion option" />
     <MESSAGE value="Add option enabled" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add option enabled" />
+    <MESSAGE value="Merge branches" />
+    <MESSAGE value="Fix all git issues" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix all git issues" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Personal_Project$functions.coverage" NAME="functions Coverage Results" MODIFIED="1767395734537" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Personal_Project$Field_service.coverage" NAME="Field_service Coverage Results" MODIFIED="1767555620871" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Personal_Project$Field_service.coverage" NAME="Field_service Coverage Results" MODIFIED="1767564527296" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

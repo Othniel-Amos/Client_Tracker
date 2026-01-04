@@ -1,5 +1,6 @@
 import pandas as pd
 from pandas import DataFrame
+from datetime import datetime
 
 
 def display(database):
@@ -52,7 +53,30 @@ def check_if_dict_empty(database):
     else:
         return False
 
+def validate_dict(database):
+    '''Validates if the user is using the right type of values'''
+    error_message = ""
+    valid = True
 
+    for key,value in database.items():
+        for value_iter in value:
+            value = str(value).strip("''[]")
+            if key == "Date":
+                try:
+                    datetime.strptime(value, "%d/%m/%Y" )
+                except:
+                    error_message = "Invalid date format"
+                    valid = False
+                    break
+            elif key == "Hours":
+                try:
+                    float(value)
+                except:
+                    error_message = "Invalid hour format"
+                    valid = False
+                    break
+
+    return valid,error_message
 
 
 
