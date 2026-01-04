@@ -2,6 +2,8 @@ import time
 import functions
 import pandas as pd
 
+from functions import check_if_dict_empty
+
 DATA_FILE = "data_values.csv"
 field_service = functions.csv_to_dict(DATA_FILE)
 
@@ -48,18 +50,25 @@ while choice != "5":
     elif choice == "2":
         functions.display(field_service)
 
+    #Deletion choice
     elif choice == "3":
-        date_edit = input("Please enter the date you would like to delete:")
-        temp_field_service,index = functions.search(field_service,date_edit)
-        functions.display(temp_field_service)
-        choice = input("Please confirm the deletion protocol (Y/N):")
+        if check_if_dict_empty(field_service):
+            date_edit = input("Please enter the date you would like to delete:")
+            try:
+                temp_field_service,index = functions.search(field_service,date_edit)
+            except TypeError:
+                print(f"{date_edit} does not exist in the records\n")
+            else:
+                functions.display(temp_field_service)
+                choice = input("Please confirm the deletion protocol (Y/N):")
 
-        if choice == "Y":
-            for key in field_service.keys():
-                del field_service[key][index]
-
-
-        print("Deletion was successful")
+                if choice == "Y":
+                    for key in field_service.keys():
+                        del field_service[key][index]
+                print("Deletion was successful")
+        else:
+            print("ERROR:There are no values in records")
+            print("Add values to continue")
 
     elif choice == "4":
         temp_field = []
@@ -79,11 +88,24 @@ while choice != "5":
         for index, key in enumerate(field_service.keys()):
             field_service[key].append(temp_field[index])
 
-    elif choice != 5:
+    elif choice != "5":
         print("Please enter a valid number")
 
 
     functions.dict_to_csv(field_service,DATA_FILE)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
