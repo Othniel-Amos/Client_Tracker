@@ -2,35 +2,17 @@ import time
 import functions
 import pandas as pd
 
+from functions import check_if_dict_empty
+
 DATA_FILE = "data_values.csv"
-field_service = {"Date":[],"Hours":[],"Student":[],"Notes":[]}
+field_service = functions.csv_to_dict(DATA_FILE)
 
-#Checks if the csv file exists and creates it if it doesn't
-exists = functions.initalize(DATA_FILE)
-
-print(exists)
 print("This is the field service app:")
 print("Use this to keep track of your clients")
 choice = ""
 
-
-
 while choice != "5":
     choice = input("Edit (1), View (2), Delete(3), Add(4), Quit(5): ").strip()
-    print(field_service)
-
-    #Prevents any errors from viewing an empty file
-    if not exists:
-        print("There appears to be no records \nPlease add some to continue")
-        choice = "4"
-        field_service = functions.csv_to_dict(DATA_FILE)
-    elif field_service["Date"] == None:
-        print("\nThere appears to be no records \nPlease add some to continue\n")
-        choice = "4"
-        field_service["Date"] = []
-    elif exists:
-        field_service = functions.csv_to_dict(DATA_FILE)
-
 
     if choice == "1":
         functions.display(field_service)
@@ -68,20 +50,25 @@ while choice != "5":
     elif choice == "2":
         functions.display(field_service)
 
+    #Deletion choice
     elif choice == "3":
-        date_edit = input("Please enter the date you would like to delete:")
-        temp_field_service,index = functions.search(field_service,date_edit)
-        functions.display(temp_field_service)
-        choice = input("Please confirm the deletion protocol (Y/N):")
+        if check_if_dict_empty(field_service):
+            date_edit = input("Please enter the date you would like to delete:")
+            try:
+                temp_field_service,index = functions.search(field_service,date_edit)
+            except TypeError:
+                print(f"{date_edit} does not exist in the records\n")
+            else:
+                functions.display(temp_field_service)
+                choice = input("Please confirm the deletion protocol (Y/N):")
 
-        if choice == "Y":
-            for key in field_service.keys():
-                del field_service[key][index]
-            if len(field_service["Date"]) == 0:
-                field_service["Date"] = None
-
-
-        print("Deletion was successful")
+                if choice == "Y":
+                    for key in field_service.keys():
+                        del field_service[key][index]
+                print("Deletion was successful")
+        else:
+            print("ERROR:There are no values in records")
+            print("Add values to continue")
 
     elif choice == "4":
         temp_field = []
@@ -100,7 +87,6 @@ while choice != "5":
         #Adds the values to the field_service dictionary
         for index, key in enumerate(field_service.keys()):
             field_service[key].append(temp_field[index])
-        exists = True
 
     elif choice != "5":
         print("Please enter a valid number")
