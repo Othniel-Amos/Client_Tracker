@@ -93,22 +93,41 @@ while choice != "6":
             print("Deletion was successful")
 
     elif choice == "4":
-        temp_field = []
-        current_date = input("Please input date or type 'Y' to input current date:")
-        if current_date == "Y":
-            current_date = time.strftime("%d/%m/%Y")
+        add_again = True
 
-        temp_field.append(current_date)
+        while add_again:
+            temp_field = []
+            temp_field_dict = {"Date":[],"Hours":[],"Student":[],"Notes":[]}
+            current_date = input("Please input date or type 'Y' to input current date:")
+            if current_date == "Y":
+                current_date = time.strftime("%d/%m/%Y")
 
-        questions = ["Number of Hours:","Student Name:","Notes:"]
+            temp_field.append(current_date)
 
-        for question in questions:
-            add_it = input(f"{question}")
-            temp_field.append(add_it)
+            questions = ["Number of Hours:","Student Name:","Notes:"]
 
-        #Adds the values to the field_service dictionary
-        for index, key in enumerate(field_service.keys()):
-            field_service[key].append(temp_field[index])
+
+            for question in questions:
+                add_it = input(f"{question}")
+                temp_field.append(add_it)
+
+            for index, key in enumerate(field_service.keys()):
+                temp_field_dict[key] = temp_field[index]
+
+            valid,error_message = functions.validate_dict(temp_field_dict)
+            if valid:
+                #Adds the values to the field_service dictionary
+                for index, key in enumerate(field_service.keys()):
+                    field_service[key].append(temp_field[index])
+            else:
+                print(f"{error_message}")
+
+            add_again = input("Would you like to add again (Y/N):").strip().upper()
+
+            if add_again == "Y":
+                add_again = True
+            else:
+                add_again = False
 
     elif choice == "5":
         #Searches the dictionary for all values
