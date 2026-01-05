@@ -31,12 +31,13 @@ while choice != "6":
         try:
             temp_field_service,index,found = functions.search(field_service,date_edit)
         except Exception as exception:
-            done = False
+            found = False
         else:
-            functions.display(temp_field_service)
-            done = True
+            if found:
+                functions.display(temp_field_service)
 
-        while done:
+
+        while found:
             print("Date (1), Hours (2), Student (3), Notes (4)")
             var_to_edit = int(input("Please select the number you wish to edit:"))
 
@@ -64,7 +65,7 @@ while choice != "6":
 
             done = input("Would you like to edit this date again (Y/N):")
             if done == "N":
-                done = False
+                found = False
 
 
         #Updates the field service dict

@@ -53,7 +53,7 @@ def search(database,date_edit,dict_key="Date",multiple=False):
 def update_dict_temp(database,temp_database,index):
     '''Updates a dictionary based on the values of another dictionary'''
     for key in database.keys():
-        add_to = str(temp_database[key])[2:-2]
+        add_to = str(temp_database[key]).strip("''[]")
         database[key][index] = add_to
 
 def csv_to_dict(datafile):
