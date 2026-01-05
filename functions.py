@@ -6,30 +6,49 @@ from datetime import datetime
 
 def display(database):
     '''Displays the values of a dictionary in a field service format'''
-    for index, day in enumerate(database["Date"]):
+    index = 0
+    for day in database["Date"]:
         print(f"Day:{database["Date"][index]}")
         print(f"Number of hours:{database["Hours"][index]}")
         print(f"Student:{database["Student"][index]}")
         print(f"Notes:{database["Notes"][index]}")
         print("\n", end = "")
+        index += 1
 
-def search(database,date_edit,dict_key="Date"):
+def search(database,date_edit,dict_key="Date",multiple=False):
     '''Searches a dictionary based on the date given'''
     try:
         temp_field_service ={}
+        dict_list = []
+        found = False
         corrupt = True
+
         for index, date in enumerate(database[dict_key]):
+            temp_field_service = {}
+            if dict_key == "Hours":
+                date = int(date)
+                date_edit = int(date_edit)
+
             if date == date_edit:
                 for key in database.keys():
-                    temp_field_service.update({key:[database[key][index]]})
+                    temp_field_service.update({key: [database[key][index]]})
                     corrupt = False
-                break
+
+                if dict_key == "Date":
+                    break
+                if multiple:
+                    dict_list.append(dict(temp_field_service))
         if corrupt:
-                raise KeyError
+            raise KeyError
     except KeyError:
         print(f"ERROR INVALID {dict_key.upper()}:The {dict_key.upper()} may not have been typed correctly")
+        return temp_field_service, index, found
     else:
-        return temp_field_service, index
+        found = True
+        if multiple:
+            return dict_list, index, found
+        else:
+            return temp_field_service, index,found
 
 def update_dict_temp(database,temp_database,index):
     '''Updates a dictionary based on the values of another dictionary'''

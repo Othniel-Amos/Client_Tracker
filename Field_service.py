@@ -1,7 +1,5 @@
 import time
 import functions
-import pandas as pd
-from datetime import datetime
 import copy
 from functions import check_if_dict_empty
 
@@ -31,8 +29,8 @@ while choice != "6":
         date_edit = input("Please enter the date you would like to edit:")
         #Searches for the date in the larger dictionary
         try:
-            temp_field_service,index = functions.search(field_service,date_edit)
-        except:
+            temp_field_service,index,found = functions.search(field_service,date_edit)
+        except Exception as exception:
             done = False
         else:
             functions.display(temp_field_service)
@@ -82,7 +80,7 @@ while choice != "6":
     elif choice == "3":
         date_edit = input("Please enter the date you would like to delete:")
         try:
-            temp_field_service,index = functions.search(field_service,date_edit)
+            temp_field_service,index,found = functions.search(field_service,date_edit)
         except TypeError:
             print(f"{date_edit} does not exist in the records\n")
         else:
@@ -115,22 +113,38 @@ while choice != "6":
     elif choice == "5":
         #Searches the dictionary for all values
         print("Date (1), Hours (2), Student (3), Notes (4)")
-        var_to_search = int(input("Please select the number you wish to edit:"))
+        var_to_search = ""
+
+        while type(var_to_search) != int:
+            try:
+                var_to_search = int(input("Please select the number you wish to search by:").strip())
+            except:
+                print("Please enter an integer value")
+
 
         while var_to_search not in [1,2,3,4]:
             print("ERROR:Invalid variable")
-            var_to_search = int(input("Please select the number you wish to edit:"))
+            var_to_search = int(input("Please select the number you wish to search by:"))
 
         search_again = False
         search_value = input("Please enter the searchable value:").strip()
         if var_to_search == 1:
-            functions.search(field_service,search_value)
+            temp_field_service, index, found = functions.search(field_service,search_value,"Date",False)
         elif var_to_search == 2:
-            functions.search(field_service,search_value,"Hours")
+            temp_field_service, index, found = functions.search(field_service,search_value,"Hours",True)
         elif var_to_search == 3:
-            functions.search(field_service,search_value,"Student")
+            temp_field_service, index, found = functions.search(field_service,search_value,"Student",True)
         else:
-            functions.search(field_service,search_value,"Notes")
+            temp_field_service, index, found= functions.search(field_service,search_value,"Notes",True)
+
+        #Checks if to display the field or not
+
+        if found and var_to_search == 1:
+            functions.display(temp_field_service)
+        elif found:
+            [functions.display(dict_iter) for dict_iter in temp_field_service]
+        else:
+            print(f"{search_value} was not found")
 
     elif choice != "6":
         print("Please enter a valid number")
