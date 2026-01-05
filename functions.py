@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 from pandas import DataFrame
 from datetime import datetime
 
@@ -12,21 +13,21 @@ def display(database):
         print(f"Notes:{database["Notes"][index]}")
         print("\n", end = "")
 
-def search(database,date_edit):
+def search(database,date_edit,dict_key="Date"):
     '''Searches a dictionary based on the date given'''
     try:
         temp_field_service ={}
         corrupt = True
-        for index, date in enumerate(database["Date"]):
+        for index, date in enumerate(database[dict_key]):
             if date == date_edit:
                 for key in database.keys():
                     temp_field_service.update({key:[database[key][index]]})
                     corrupt = False
                 break
         if corrupt:
-            raise KeyError
+                raise KeyError
     except KeyError:
-        print("ERROR INVALID DATE:The date may not have been typed correctly")
+        print(f"ERROR INVALID {dict_key.upper()}:The {dict_key.upper()} may not have been typed correctly")
     else:
         return temp_field_service, index
 
@@ -60,17 +61,17 @@ def validate_dict(database):
 
     for key,value in database.items():
         for value_iter in value:
-            value = str(value).strip("''[]")
+            value_iter = str(value_iter).strip("''[]")
             if key == "Date":
                 try:
-                    datetime.strptime(value, "%d/%m/%Y" )
+                    datetime.strptime(value_iter, "%d/%m/%Y" )
                 except:
                     error_message = "Invalid date format"
                     valid = False
                     break
             elif key == "Hours":
                 try:
-                    float(value)
+                    float(value_iter)
                 except:
                     error_message = "Invalid hour format"
                     valid = False
@@ -78,6 +79,12 @@ def validate_dict(database):
 
     return valid,error_message
 
+def csv_exists(datafile):
+    if os.path.exists(datafile):
+        pass
+    else:
+        with open(datafile,"w") as file:
+            file.write("Date,Hours,Student,Notes")
 
 
 

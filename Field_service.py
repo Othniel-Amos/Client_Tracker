@@ -6,23 +6,24 @@ import copy
 from functions import check_if_dict_empty
 
 DATA_FILE = "data_values.csv"
+functions.csv_exists(DATA_FILE)
 field_service = functions.csv_to_dict(DATA_FILE)
 
 print("This is the field service app:")
 print("Use this to keep track of your clients")
 choice = ""
 
-while choice != "5":
+while choice != "6":
 
     #Prevents a lot of issues by blocking some options if the record is empty
     if not check_if_dict_empty(field_service):
         print("The record is empty so limited options available")
-        choice = input("Add(4), Quit(5): ").strip()
-        if choice in ["1","2","3"]:
+        choice = input("Add(4), Quit(6): ").strip()
+        if choice in ["1","2","3","5"]:
             print("ERROR:These numbers cannot be accepted")
             continue
     else:
-        choice = input("Edit (1), View (2), Delete(3), Add(4), Quit(5): ").strip()
+        choice = input("Edit (1), View (2), Delete(3), Add(4), Search(5), Quit(6): ").strip()
 
     #Add function
     if choice == "1":
@@ -111,7 +112,27 @@ while choice != "5":
         for index, key in enumerate(field_service.keys()):
             field_service[key].append(temp_field[index])
 
-    elif choice != "5":
+    elif choice == "5":
+        #Searches the dictionary for all values
+        print("Date (1), Hours (2), Student (3), Notes (4)")
+        var_to_search = int(input("Please select the number you wish to edit:"))
+
+        while var_to_search not in [1,2,3,4]:
+            print("ERROR:Invalid variable")
+            var_to_search = int(input("Please select the number you wish to edit:"))
+
+        search_again = False
+        search_value = input("Please enter the searchable value:").strip()
+        if var_to_search == 1:
+            functions.search(field_service,search_value)
+        elif var_to_search == 2:
+            functions.search(field_service,search_value,"Hours")
+        elif var_to_search == 3:
+            functions.search(field_service,search_value,"Student")
+        else:
+            functions.search(field_service,search_value,"Notes")
+
+    elif choice != "6":
         print("Please enter a valid number")
 
 
