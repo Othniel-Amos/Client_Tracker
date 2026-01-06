@@ -4,19 +4,19 @@ import copy
 
 DATA_FILE = "data_values.csv"
 functions.csv_exists(DATA_FILE)
-field_service = functions.csv_to_dict(DATA_FILE)
+database_main = functions.csv_to_dict(DATA_FILE)
 
 def main_edit():
-    functions.display(field_service)
+    functions.display(database_main)
     date_edit = input("Please enter the date you would like to edit:")
     # Searches for the date in the larger dictionary
     try:
-        temp_field_service, index, found = functions.search(field_service, date_edit)
+        temp_database_main, index, found = functions.search(database_main, date_edit)
     except Exception as exception:
         found = False
     else:
         if found:
-            functions.display(temp_field_service)
+            functions.display(temp_database_main)
 
     while found:
         print("Date (1), Hours (2), Student (3), Notes (4)")
@@ -26,18 +26,18 @@ def main_edit():
             print("Please type an integer value")
         else:
             # find the specific key value correlating to the choice the user selected in var_to_edit
-            word = list(temp_field_service.keys())[var_to_edit - 1]
+            word = list(temp_database_main.keys())[var_to_edit - 1]
 
-            change = input(f"Change {str(temp_field_service[word]).strip("''[]")} to...")
+            change = input(f"Change {str(temp_database_main[word]).strip("''[]")} to...")
 
-            temp_field_service_2 = copy.deepcopy(temp_field_service)
-            temp_field_service_2[word][0] = str(change)
+            temp_database_main_2 = copy.deepcopy(temp_database_main)
+            temp_database_main_2[word][0] = str(change)
 
-            valid, error_message = functions.validate_dict(temp_field_service_2)
+            valid, error_message = functions.validate_dict(temp_database_main_2)
 
             if valid:
-                temp_field_service = temp_field_service_2
-                functions.update_dict_temp(field_service, temp_field_service, index)
+                temp_database_main = temp_database_main_2
+                functions.update_dict_temp(database_main, temp_database_main, index)
             else:
                 print(f"ERROR:{error_message} in {change}")
                 if var_to_edit == 1:
@@ -53,44 +53,47 @@ def main_edit():
 def main_delete():
     date_edit = input("Please enter the date you would like to delete:")
     try:
-        temp_field_service, index, found = functions.search(field_service, date_edit)
+        temp_database_main, index, found = functions.search(database_main, date_edit)
     except TypeError:
         print(f"{date_edit} does not exist in the records\n")
     else:
-        functions.display(temp_field_service)
-        choice_delete = input("Please confirm the deletion protocol (Y/N):")
+        if found:
+            functions.display(temp_database_main)
+            choice_delete = input("Please confirm the deletion protocol (Y/N):")
 
-        if choice_delete == "Y":
-            for key in field_service.keys():
-                del field_service[key][index]
-        print("Deletion was successful")
+            if choice_delete == "Y":
+                for key in database_main.keys():
+                    del database_main[key][index]
+            print("Deletion was successful")
+        else:
+            print("Unknown error (Date may have not been typed correctly)")
 
 def main_add():
     add_again = True
 
     while add_again:
-        temp_field = []
-        temp_field_dict = {"Date": [], "Hours": [], "Student": [], "Notes": []}
+        temp_database = []
+        temp_database_dict = {"Date": [], "Hours": [], "Student": [], "Notes": []}
         current_date = input("Please input date or type 'Y' to input current date:")
         if current_date == "Y":
             current_date = time.strftime("%d/%m/%Y")
 
-        temp_field.append(current_date)
+        temp_database.append(current_date)
 
         questions = ["Number of Hours:", "Student Name:", "Notes:"]
 
         for question in questions:
             add_it = input(f"{question}")
-            temp_field.append(add_it)
+            temp_database.append(add_it)
 
-        for index, key in enumerate(field_service.keys()):
-            temp_field_dict[key] = temp_field[index]
+        for index, key in enumerate(database_main.keys()):
+            temp_database_dict[key] = temp_database[index]
 
-        valid, error_message = functions.validate_dict(temp_field_dict)
+        valid, error_message = functions.validate_dict(temp_database_dict)
         if valid:
-            # Adds the values to the field_service dictionary
-            for index, key in enumerate(field_service.keys()):
-                field_service[key].append(temp_field[index])
+            # Adds the values to the database dictionary
+            for index, key in enumerate(database_main.keys()):
+                database_main[key].append(temp_database[index])
         else:
             print(f"{error_message}")
 
@@ -121,20 +124,20 @@ def main_search():
     while search_again:
         search_value = input("Please enter the searchable value:").strip()
         if var_to_search == 1:
-            temp_field_service, index, found = functions.search(field_service, search_value, "Date", False)
+            temp_database_main, index, found = functions.search(database_main, search_value, "Date", False)
         elif var_to_search == 2:
-            temp_field_service, index, found = functions.search(field_service, search_value, "Hours", True)
+            temp_database_main, index, found = functions.search(database_main, search_value, "Hours", True)
         elif var_to_search == 3:
-            temp_field_service, index, found = functions.search(field_service, search_value, "Student", True)
+            temp_database_main, index, found = functions.search(database_main, search_value, "Student", True)
         else:
-            temp_field_service, index, found = functions.search(field_service, search_value, "Notes", True)
+            temp_database_main, index, found = functions.search(database_main, search_value, "Notes", True)
 
-        # Checks if to display the field or not
+        # Checks if to display the database or not
 
         if found and var_to_search == 1:
-            functions.display(temp_field_service)
+            functions.display(temp_database_main)
         elif found:
-            [functions.display(dict_iter) for dict_iter in temp_field_service]
+            [functions.display(dict_iter) for dict_iter in temp_database_main]
         else:
             print(f"{search_value} was not found")
 
@@ -150,7 +153,7 @@ def main_search():
 
 def validate_choice():
     global choice
-    if not functions.check_if_dict_empty(field_service):
+    if not functions.check_if_dict_empty(database_main):
         print("The record is empty so limited options available")
         choice = input("Add(4), Quit(6): ").strip()
         if choice in ["1","2","3","5"]:
@@ -179,7 +182,7 @@ while choice != "6":
         main_edit()
 
     elif choice == "2":
-        functions.display(field_service)
+        functions.display(database_main)
 
     #Deletion choice
     elif choice == "3":
@@ -195,7 +198,7 @@ while choice != "6":
         print("Please enter a valid number")
 
 
-    functions.dict_to_csv(field_service,DATA_FILE)
+    functions.dict_to_csv(database_main, DATA_FILE)
 
 print("\nProgram successfully terminated")
 
