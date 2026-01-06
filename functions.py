@@ -1,11 +1,10 @@
 import pandas as pd
 import os
-from pandas import DataFrame
 from datetime import datetime
 
 
 def display(database):
-    '''Displays the values of a dictionary in a field service format'''
+    """Displays the values of a dictionary in a readable format"""
     index = 0
     for day in database["Date"]:
         print(f"Day:{database["Date"][index]}")
@@ -16,7 +15,11 @@ def display(database):
         index += 1
 
 def search(database,date_edit,dict_key="Date",multiple=False):
-    '''Searches a dictionary based on the date given'''
+    """Searches a dictionary based on the date given.
+    It can also search by using other parameters of the dictionary:
+    'Hours', 'Students' & 'Notes'.
+    With multiple set to false it will return only the last instance of the specified searchable
+    (this isn't a problem for dates as dates are expected to be unique and never repeat)."""
     try:
         temp_field_service ={}
         dict_list = []
@@ -51,30 +54,33 @@ def search(database,date_edit,dict_key="Date",multiple=False):
             return temp_field_service, index,found
 
 def update_dict_temp(database,temp_database,index):
-    '''Updates a dictionary based on the values of another dictionary'''
+    """Updates a dictionary based on the values of another dictionary
+    (It will add a temporary dictionary to the main dictionary)"""
     for key in database.keys():
         add_to = str(temp_database[key]).strip("''[]")
         database[key][index] = add_to
 
 def csv_to_dict(datafile):
-    """Converts a csv file to a dictionary"""
+    """Converts a csv file to a dictionary
+    (This'll be a nested dictionary with keys and lists as values)"""
     df = pd.read_csv(datafile)
     database = df.to_dict(orient="list")
     return database
 
 def dict_to_csv(database,datafile):
-    """Converts a dictionary to a csv file (Used after altering the dictionary)"""
+    """Converts a dictionary to a csv file (used after altering the dictionary)"""
     df = pd.DataFrame(database)
     df.to_csv(datafile, index=False)
 
 def check_if_dict_empty(database):
+    """Checks if a dictionary is empty and returns true or false"""
     if any(database.values()):
         return True
     else:
         return False
 
 def validate_dict(database):
-    '''Validates if the user is using the right type of values'''
+    """Validates if the user is using the right type of values"""
     error_message = ""
     valid = True
 
@@ -116,6 +122,7 @@ def validate_dict(database):
     return valid,error_message
 
 def csv_exists(datafile):
+    """Check if a csv file exist and if not it is created"""
     if os.path.exists(datafile):
         pass
     else:
