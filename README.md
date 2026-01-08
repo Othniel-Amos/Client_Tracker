@@ -66,20 +66,12 @@ notes = "\t"
 - ### Add  
   - The user adds a date and all the associated values to the database
 - ### Search  
-  -The user searches for an entry in the database by using any of the columns as a searchable parameter
+  - The user searches for an entry in the database by using any of the columns as a searchable parameter
 - ### Quit  
   - Terminates the program 
 
 ## Plans for future development
-The addition of certain functions to the program after its initial publishing for convince for the user. 
-- ### Sort 
-  - To be able to sort the csv file based on dates so its in chronological order 
-- ### Implement SQL 
-  - SQL would deal with some of the validation that need to be manually coded into python
-- ### Catagorize 
-  - Group and display values together based on their dates such as only client records in July 2025  
-
-Plans are also in the works to make this a GUI in the foreseeable future
+Plans are in the works to make this a GUI in the foreseeable future
 
 ## Learning and personal experience 
 Another reason why I wanted to make this app is to challenge myself and prompt myself to learn how to find answer to problems 
