@@ -25,7 +25,7 @@ pip install -r requirements.txt
 ```
 
 
-## Example of database values  
+## Example of database values 
 ```python 
 database = {"Date":['06/01/2026'], "Hours":[12.0],"Student":['James'], "Notes":["A good listener"]}
 ``` 
