@@ -17,6 +17,14 @@ A client typically has these values assigned to them.
 * Student: (Can be any name, it could even be alphanumerical) 
 * Notes: (A short note about the client is expected)
 
+## Installation 
+- Works with python 3.12 +   
+- Open command terminal in virtual environment and paste the following
+```
+pip install -r requirements.txt
+```
+
+
 ## Example of a database values 
 ```python 
 database = {"Date":['06/01/2026'], "Hours":[12.0],"Student":['James'], "Notes":["A good listener"]}
@@ -71,7 +79,8 @@ notes = "\t"
   - Terminates the program 
 
 ## Plans for future development
-Plans are in the works to make this a GUI in the foreseeable future
+Plans are in the works to make this a GUI in the foreseeable future.
+<br>Contact me at https://www.linkedin.com/in/othniel-amos-02531b3a5/ 
 
 ## Learning and personal experience 
 Another reason why I wanted to make this app is to challenge myself and prompt myself to learn how to find answer to problems 
