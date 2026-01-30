@@ -31,7 +31,7 @@ def main_edit():
             change = input(f"Change {str(temp_database_main[word]).strip("''[]")} to...")
 
             temp_database_main_2 = copy.deepcopy(temp_database_main)
-            temp_database_main_2[word][0] = str(change)
+            temp_database_main_2[word][0] = str(change).strip("""""")
 
             valid, error_message = functions.validate_dict(temp_database_main_2)
 
